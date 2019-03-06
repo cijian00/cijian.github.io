@@ -3,4 +3,4 @@ layout: page
 title: About Me
 ---
 
-cijian
+<center>cijian</center>
