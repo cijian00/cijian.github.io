@@ -85,3 +85,132 @@ docker run -p 5000:5000 -v PATH_TO_YOUR_DATA/:/opt/data/ polichombr
 ```
 
 > 2.主页面
+
+![主界面](https://cijian00.github.io/polichombr/1.png)
+
+
+
+> 显示历史上传文件的MD5值，以此为链接。
+
+```
+-- Home（主界面）
+-- Search（搜索界面）
+# 三种检索方式。搜索文件hash、Machoc哈希表、文本信息（摘要，函数名称，字符串，文件名，分析结果）。
+-- Families（群组）
+# 将样本进行分类
+-- signature
+# 用于Yara匹配
+```
+
+>3.文件上传
+
+![文件上传](https://cijian00.github.io/polichombr/2.png)
+
+```
+- Sensibility：TLP协议
+-- TLP White  - 无限制
+根据标准版权规则，WHITE信息可以自由分发，不受任何限制。
+-- TLP Green - 社区范围
+此类信息可以在特定社区内广泛传播。但是，这些信息可能不会在互联网上公开发布或公开发布，也不会在社区外发布。
+-- TLP Amber - 限量发行
+收件人可以与其组织内的其他人共享AMBER信息，但仅限于“需要知道”的基础上。可以期望发起者指定该共享的预期限制。
+-- TLP Red - 仅限指定收件人
+例如，在会议的背景下，RED信息仅限于出席会议的人员。在大多数情况下，RED信息将通过口头或亲自传递。
+# 选择项多了一个TLP BLACK，【禁止分享】。
+```
+
+>4.分析界面
+
+![分析界面](https://cijian00.github.io/polichombr/3.png)
+
+```
+- 样本元数据信息
+-- 文件类型
+-- 程序创建时间
+-- 文件大小
+-- MD5
+-- SHA1
+-- SHA256
+-- 分析状态
+-- 文件名称
+-- 所属用户
+-- 所属群组
+- 摘要
+- Machoc 签名
+```
+
+>5.二进制静态分析
+
+![静态分析](https://cijian00.github.io/polichombr/4.png)
+
+```
+-	判断是否加壳
+--	敏感函数调用
+--	调用的API名称
+--	函数起始地址、栈顶地址
+--	入口点函数调用树
+-	加密数据
+-	PE文件
+
+# .dll出现的位置地址，栈地址，函数地址；
+```
+
+>6.代码解析
+
+- 基于函数地址信息生成程序流程图
+
+![代码解析](https://cijian00.github.io/polichombr/5.png)
+
+- 在文件存储目录/data/storage下生成.svg文件，用以展示程序流程图。
+
+![代码解析](https://cijian00.github.io/polichombr/6.png)
+
+- .bin文件以样本文件的SHA256值命名。
+
+>7.API
+
+```
+import argparse
+
+from poliapi.mainapi import SampleModule, FamilyModule
+
+def send_sample(sample="", family=None, tlp=None, api_key=""):
+    """
+        Send a sample using the SampleModule API
+    """
+    sapi = SampleModule(api_key=api_key)
+    if family is not None:
+        fapi = FamilyModule(api_key=api_key)
+        answer = fapi.get_family(family)
+        if answer["family"] is None:
+            print("[!] Error : the family does not exist...")
+            return False
+    sid = sapi.send_sample(sample, tlp)
+
+    print("Uploaded sample ID : %d" % sid)
+    if family is not None:
+        answer = sapi.assign_to_family(sid, family)
+        if not answer['result']:
+            print("Cannot affect sample to family")
+            return False
+    return True
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Send sample via the API")
+    parser.add_argument('api_key', type=str, help="Your API key")
+    parser.add_argument('samples', help='the samples files', nargs='+')
+    parser.add_argument('--family', help='associated family')
+    parser.add_argument('--tlp', type=int,
+                        help="The TLP level,\
+                              can be from 1 to 5,\
+                              1=TLPWHITE / 5=TLPBLACK")
+    args = parser.parse_args()
+    for sample in args.samples:
+send_sample(sample, args.family, args.tlp, args.api_key)
+```
+- 测试
+```
+curl -XGET http://IP/api/1.0/samples/1/names/ --cookie "remember_token=……;session= "
+```
+
+![API](https://cijian00.github.io/polichombr/7.png)
