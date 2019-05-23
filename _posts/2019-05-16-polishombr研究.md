@@ -209,6 +209,7 @@ if __name__ == "__main__":
 send_sample(sample, args.family, args.tlp, args.api_key)
 ```
 - 测试
+
 ```
 curl -XGET http://IP/api/1.0/samples/1/names/ --cookie "remember_token=……;session= "
 ```
