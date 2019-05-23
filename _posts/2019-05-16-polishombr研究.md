@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Polishombr - 二进制分析（未完）
+title: Polishombr - 二进制分析
 tags: [工具]
 comments: true
 ---
