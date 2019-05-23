@@ -86,7 +86,7 @@ docker run -p 5000:5000 -v PATH_TO_YOUR_DATA/:/opt/data/ polichombr
 
 > 2.主页面
 
-![主界面](https://cijian00.github.io/polichombr/1.png)
+![主界面](https://cijian00.github.io/img/polichombr/1.png)
 
 
 
@@ -104,7 +104,7 @@ docker run -p 5000:5000 -v PATH_TO_YOUR_DATA/:/opt/data/ polichombr
 
 >3.文件上传
 
-![文件上传](https://cijian00.github.io/polichombr/2.png)
+![文件上传](https://cijian00.github.io/img/polichombr/2.png)
 
 ```
 - Sensibility：TLP协议
@@ -121,7 +121,7 @@ docker run -p 5000:5000 -v PATH_TO_YOUR_DATA/:/opt/data/ polichombr
 
 >4.分析界面
 
-![分析界面](https://cijian00.github.io/polichombr/3.png)
+![分析界面](https://cijian00.github.io/img/polichombr/3.png)
 
 ```
 - 样本元数据信息
@@ -141,7 +141,7 @@ docker run -p 5000:5000 -v PATH_TO_YOUR_DATA/:/opt/data/ polichombr
 
 >5.二进制静态分析
 
-![静态分析](https://cijian00.github.io/polichombr/4.png)
+![静态分析](https://cijian00.github.io/img/polichombr/4.png)
 
 ```
 -	判断是否加壳
@@ -159,11 +159,11 @@ docker run -p 5000:5000 -v PATH_TO_YOUR_DATA/:/opt/data/ polichombr
 
 - 基于函数地址信息生成程序流程图
 
-![代码解析](https://cijian00.github.io/polichombr/5.png)
+![代码解析](https://cijian00.github.io/img/polichombr/5.png)
 
 - 在文件存储目录/data/storage下生成.svg文件，用以展示程序流程图。
 
-![代码解析](https://cijian00.github.io/polichombr/6.png)
+![代码解析](https://cijian00.github.io/img/polichombr/6.png)
 
 - .bin文件以样本文件的SHA256值命名。
 
@@ -213,4 +213,4 @@ send_sample(sample, args.family, args.tlp, args.api_key)
 curl -XGET http://IP/api/1.0/samples/1/names/ --cookie "remember_token=……;session= "
 ```
 
-![API](https://cijian00.github.io/polichombr/7.png)
+![API](https://cijian00.github.io/img/polichombr/7.png)
